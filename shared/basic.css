@@ -17,6 +17,10 @@ body {
     min-height: 100%;
 }
 
+h1,h2,h3,h4 {
+    text-transform: capitalize;
+}
+
 body > nav ul {
     padding: 0 15px;
     display: flex;

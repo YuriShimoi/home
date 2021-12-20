@@ -1,7 +1,66 @@
 div.article {
     padding: 0 30px;
+    text-indent: 20px;
+    text-align: justify;
 }
 
-h3 {
-    font-weight: normal;
+div.article h1,
+div.article h2,
+div.article h3,
+div.article h4 {
+    text-indent: 0;
+    text-align: start;
+}
+div.article h3 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+div.article p {
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+div.article p:last-child {
+    margin-bottom: 16px;
+}
+
+div#chess-table-div {
+    display: flex;
+    justify-content: center;
+    gap: 20px 50px;
+    flex-wrap: wrap;
+}
+
+table.chess-table {
+    border-collapse: collapse;
+    display: inline-table;
+}
+table.chess-table td {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+}
+table.chess-table tbody td:not(*:first-child) {
+    border: 1px solid #222;
+}
+table.chess-table td.chess-table-black {
+    background-color: #222;
+    color: white;
+}
+
+div#minesweeper-table-div {
+    display: flex;
+    justify-content: center;
+    gap: 20px 50px;
+    flex-wrap: wrap;
+}
+
+table.minesweeper-table {
+    border-collapse: collapse;
+    display: inline-table;
+}
+table.minesweeper-table td {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    border: 1px solid #222;
 }

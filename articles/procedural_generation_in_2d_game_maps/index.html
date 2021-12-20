@@ -10,6 +10,7 @@
     <script src="/home/shared/basic.js"></script>
 	<!-- <link rel="stylesheet" href="basic.css"> -->
 	<link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -19,21 +20,76 @@
 			</ul>
 		</nav>
     <div class="article">
-      <h1>Geração Producedural Em Mapas De Jogos 2D</h1>
-      <h2>O Que é Um Mapa De Jogo</h2>
-  
-      <h2>O Que é Procedural</h2>
-  
-      <h2>Quais As Diferenças/Desvantagens/Vantagens a Não Procedural</h2>
-  
-      <h2>Análise Sobre Alguns Métodos</h2>
+      <h1>Geração procedural em mapas de jogos 2D</h1>
+      <p>
+        Quando falamos de <b>geração procedural</b> é importante primeiro saber que ela pode estar presente em várias formas,
+        <a target="_blank" href="https://commons.wikimedia.org/wiki/File:LegoDog_small.gif#/media/File:LegoDog_small.gif">animação procedural</a>, 
+        <a target="_blank" href="https://tones.wolfram.com/">música procedural</a>, ou o assunto que será tratado neste artigo, terreno procedural.
+      </p>
+      <p>
+        Algo gerado proceduralmente deriva de um conjunto de regras ou fórmulas, sejam simples ou complexas, que produzem resultados semelhantes ou idênticos
+        toda vez que aplicadas, logo, um produto procedural pode ser sempre o mesmo ou completamente único, porém, sempre previsível.
+      </p>
+      <h3>Tabuleiro de xadrez - geração idêntica</h3>
+      <p>
+        Um exemplo simples que podemos observar é produzir um tabuleiro de xadrez proceduralmente.
+        Primeiro temos que levar em consideração o tamanho do tabuleiro que, neste caso, são <b>8x8 casas</b>, para facilitar o entendimento vamos de maneira
+        não convencional <b>enumerar ambos os eixos com números de 1 a 8</b>, a cor de cada casa será decidida pela <b>soma dos números em ambos os eixos</b>,
+        <b>números pares serão casas escuras</b> e <b>ímpares casas claras</b>. Seguindo este processo o resultado sempre será um tabuleiro quadriculado idêntico
+        ao de xadrez.
+      </p>
+      <br>
+      <div id="chess-table-div">
+        <table class="chess-table chess-table-enumerated"></table>
+        <table class="chess-table"></table>
+      </div>
+      <p>
+        Gerações procedurais podem substituir a produção manual ou diminuir o uso de espaço de armazenamento, trocando algo armazenado extensivamente por um conjunto
+        de regras (você sabia que, de modo geral, números flutuantes utilizam <a target="_blank" href="https://en.wikipedia.org/wiki/Significand">mantissa</a>?
+        Armazenar zeros é perda de espaço!). Tabuleiros de xadrez apesar de simples de se gerar e serem um bom caso de estudo, são razoavelmente pequenos e não
+        possuem variações, logo, pode não ser vantajoso construí-los de maneira procedural.
+      </p>
+      <h3>Tabuleiro de campo minado - geração única</h3>
+      <p>
+        Um caso interessante e bem conhecido de um tabuleiro variável é o <b>campo minado</b>. Em comparação, uma série de tabuleiros poderiam ser manualmente
+        criados e armazenados na memória e, de maneira linear ou aleatória, escolhidos para serem jogados, ou com um pouco de engenharia reversa podemos criá-los
+        de maneira procedural e armazenar somente as regras necessárias para criar uma variedade quase infinita de tabuleiros.
+      </p>
+      <p>
+        Mãos à obra! Simplificando a criação do campo minado, vamos novamente considerar um tabuleiro de <b> dimensões 8x8</b>, das 64 casas <b>8 destas em posições
+        aleatórias serão minas terrestres</b>, as demais serão vazias ou terão o <b>número de minas adjacentes</b> caso aja alguma, ou seja, variam de 1 a 8.
+        Uma vez que o tabuleiro foi gerado basta esconder os valores das casas, e revelá-los conforme a interação do jogador (se esta página for reiniciada, um novo
+        tabuleiro será criado proceduralmente).
+      </p>
+      <br>
+      <div id="minesweeper-table-div">
+        <table class="minesweeper-table"></table>
+        <table class="minesweeper-table minesweeper-table-enumerated"></table>
+      </div>
+        
+      <h2>O que constitui um mapa de jogo</h2>
+      <p>
+
+      </p>
+      
+      <h2>O que pode ser gerado proceduralmente</h2>
+      
+      
+      <h2>Quais as vantagens e desvantagens</h2>
+      
+      
+      <h2>Alguns métodos e suas aplicações</h2>
       
       <h3>Drunken Walk</h3>
+      
+      
       <h3>Cellullar Automata</h3>
+      
+      
       <h3>Perlin Noise</h3>
-    
-  
-      <a href="https://yurishimoi.github.io/simpleworld/procedure-demo.html">Procedure demo</a>
+      
+      
+      <a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html">Procedure demo</a>
     </div>
 	</body>
 </html>
