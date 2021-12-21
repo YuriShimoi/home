@@ -3,6 +3,9 @@ div.article {
     text-indent: 20px;
     text-align: justify;
 }
+div.article .center {
+    text-align: center;
+}
 
 div.article h1,
 div.article h2,
@@ -21,6 +24,10 @@ div.article p {
 }
 div.article p:last-child {
     margin-bottom: 16px;
+}
+div.article img {
+    width: 100%;
+    max-width: 400px;
 }
 
 div#chess-table-div {
