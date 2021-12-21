@@ -5,6 +5,7 @@ div.article {
 }
 div.article .center {
     text-align: center;
+    text-indent: 0;
 }
 
 div.article h1,
