@@ -72,3 +72,32 @@ table.minesweeper-table td {
     text-align: center;
     border: 1px solid #222;
 }
+
+
+div#forest-table-div {
+    display: flex;
+    justify-content: center;
+    gap: 20px 50px;
+    flex-wrap: wrap;
+}
+table.forest-table {
+    border-collapse: collapse;
+    display: inline-table;
+    border: 1px solid #222;
+    background-color: green;
+}
+table.forest-table td {
+    width: 7px;
+    height: 7px;
+    text-align: center;
+    /* border: 1px dashed #00000033; */
+}
+table.forest-table td.procCell {
+    background-color: #ffff00;
+}
+table.forest-table td.pathCell {
+    background-color: greenyellow;
+}
+table.forest-table td.playerCell {
+    background-color: red;
+}

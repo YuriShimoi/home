@@ -49,7 +49,7 @@
         Armazenar zeros é perda de espaço!). Tabuleiros de xadrez apesar de simples de se gerar e serem um bom caso de estudo, são razoavelmente pequenos e não
         possuem variações, logo, pode não ser vantajoso construí-los de maneira procedural.
       </p>
-      <h3>Tabuleiro de campo minado - geração única</h3>
+      <h3>Tabuleiro de campo minado - geração aleatória</h3>
       <p>
         Um caso interessante e bem conhecido de um tabuleiro variável é o <b>campo minado</b>. Em comparação, uma série de tabuleiros poderiam ser manualmente
         criados e armazenados na memória e, de maneira linear ou aleatória, escolhidos para serem jogados, ou com um pouco de engenharia reversa podemos criá-los
@@ -89,9 +89,24 @@
       <h2>Quais as vantagens e desvantagens</h2>
       <p>
         A questão mas importante aqui é <b>o quê vale a pena gerar proceduralmente</b>, para responder isto é necessário entender as vantagens e desvantagens para os
-        tipos de mapas que podem ser abordados.
-      </p>      
-      
+        tipos de mapas que podem ser abordados. Para simplificação do que precisamos observar, vamos trabalhar primeiro com a menor região e depois aumentar o escopo
+        do que podemos substituir ou mesclar com métodos procedurais.
+      </p>
+      <p>
+        Neste caso de exemplo vamos criar um caminho em uma floresta, <b>o player (em vermelho)</b> inicia bem no centro do mapa e as <b>áreas abertas (sem árvores)</b>
+        são um círculo ao redor e um caminho de 3 blocos de largura em direção ao lado inferior. Para comparação, no método procedural vamos seguir as mesmas regras,com
+        a diferença somente de <b>iniciar o jogador em um ponto aleatório (dentro da área marcada em amarelo)</b> e então traçar um caminho até o centro do lado inferior.
+      </p>
+      <br>
+      <div id="forest-table-div">
+        <table class="forest-table"></table>
+        <table class="forest-table forest-marked forest-procedural"></table>
+        <table class="forest-table forest-procedural"></table>
+      </div>
+      <p>
+        Se observarmos as "florestas" no exemplo anterior
+      </p>
+
       
       <h2>Alguns métodos e suas aplicações</h2>
       
