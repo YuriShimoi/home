@@ -90,7 +90,6 @@ table.forest-table td {
     width: 7px;
     height: 7px;
     text-align: center;
-    /* border: 1px dashed #00000033; */
 }
 table.forest-table td.procCell {
     background-color: #ffff00;
@@ -100,4 +99,8 @@ table.forest-table td.pathCell {
 }
 table.forest-table td.playerCell {
     background-color: red;
+}
+table.forest-table tr:nth-child(even) td:nth-child(even),
+table.forest-table tr:nth-child(odd) td:nth-child(odd) {
+    box-shadow: inset 20px 20px #00000015;
 }

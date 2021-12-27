@@ -27,8 +27,8 @@
         <a target="_blank" href="https://tones.wolfram.com/">música procedural</a>, ou o assunto que será tratado neste artigo, terreno procedural.
       </p>
       <p>
-        Algo gerado proceduralmente deriva de um conjunto de regras ou fórmulas, sejam simples ou complexas, que produzem resultados semelhantes ou idênticos
-        toda vez que aplicadas, logo, um produto procedural pode ser sempre o mesmo ou completamente único, porém, sempre previsível.
+        Algo gerado proceduralmente deriva de um conjunto de regras ou fórmulas, sejam simples ou complexas, que produzem resultados semelhantes ou idênticos toda
+        vez que aplicadas, logo, um produto procedural pode ser sempre o mesmo ou completamente único, porém, sempre previsível.
       </p>
       <h3>Tabuleiro de xadrez - geração idêntica</h3>
       <p>
@@ -58,8 +58,8 @@
       <p>
         Mãos à obra! Simplificando a criação do campo minado, vamos novamente considerar um tabuleiro de <b> dimensões 8x8</b>, das 64 casas <b>8 destas em posições
         aleatórias serão minas terrestres</b>, as demais serão vazias ou terão o <b>número de minas adjacentes</b> caso haja alguma, ou seja, variam de 1 a 8.
-        Uma vez que o tabuleiro foi gerado basta esconder os valores das casas, e revelá-los conforme a interação do jogador (se esta página for reiniciada, um novo
-        tabuleiro será criado proceduralmente).
+        Uma vez que o tabuleiro foi gerado basta esconder os valores das casas, e revelá-los conforme a interação do jogador.
+        <i>(se esta página for reiniciada, um novo tabuleiro será criado proceduralmente)</i>
       </p>
       <br>
       <div id="minesweeper-table-div">
@@ -89,13 +89,14 @@
       <h2>Quais as vantagens e desvantagens</h2>
       <p>
         A questão mas importante aqui é <b>o quê vale a pena gerar proceduralmente</b>, para responder isto é necessário entender as vantagens e desvantagens para os
-        tipos de mapas que podem ser abordados. Para simplificação do que precisamos observar, vamos trabalhar primeiro com a menor região e depois aumentar o escopo
-        do que podemos substituir ou mesclar com métodos procedurais.
+        tipos de mapas que podem ser abordados. Para simplificação do que precisamos observar, vamos trabalhar com um mapa básico de uma floresta criada manualmente,
+        em seguida aplicar algumas regras para gerar variações proceduralmente.
       </p>
       <p>
         Neste caso de exemplo vamos criar um caminho em uma floresta, <b>o player (em vermelho)</b> inicia bem no centro do mapa e as <b>áreas abertas (sem árvores)</b>
-        são um círculo ao redor e um caminho de 3 blocos de largura em direção ao lado inferior. Para comparação, no método procedural vamos seguir as mesmas regras,com
+        são um círculo ao redor e um caminho de 3 blocos de largura em direção ao lado inferior. Para comparação, no método procedural vamos seguir as mesmas regras, com
         a diferença somente de <b>iniciar o jogador em um ponto aleatório (dentro da área marcada em amarelo)</b> e então traçar um caminho até o centro do lado inferior.
+        <i>(se esta página for atualizada um novo mapa será gerado proceduralmente)</i>
       </p>
       <br>
       <div id="forest-table-div">
@@ -104,7 +105,12 @@
         <table class="forest-table forest-procedural"></table>
       </div>
       <p>
-        Se observarmos as "florestas" no exemplo anterior
+        Entre as principais vantagens de utilizar métodos procedurais para geração de terreno é a englobar variações do terreno sem a necessidade de produzí-los
+        manualmente e, dependendo da variação, terrenos com estética mais natural (menos seções retas ou centralizadas) podem ser obtidos e, como citado anteriormente, a
+        presença do método procedural disponibiliza variações do terreno utilizando menos memória.
+      </p>
+      <p>
+        
       </p>
 
       

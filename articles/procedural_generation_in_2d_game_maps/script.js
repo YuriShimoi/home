@@ -42,6 +42,7 @@ function wakeup() {
     }
     for(let ct=0; ct < forestTables.length; ct++) {
         generateForestTable(forestTables[ct], forestSize.x, forestSize.y, rndPos);
+        // obfuscateTable(forestTables[ct]);
     }
 }
 
@@ -144,6 +145,17 @@ function generateForestTable(el, x, y, rndpos={}) {
                 tableBodyRowCell.classList.add("pathCell");
             if(tbx == pPos.x && tby == pPos.y)
                 tableBodyRowCell.classList.add("playerCell");
+        }
+    }
+}
+
+function obfuscateTable(el) {
+    let tbRows = el.rows;
+    for(let tr=0; tr < tbRows.length; tr++) {
+        let tbCells = tbRows[tr].cells;
+        for(let tc=0; tc < tbCells.length; tc++) {
+            let rndHex = Math.floor(Math.random() * 25)+10;
+            tbCells[tc].style.boxShadow = "inset 10px 10px #000000" + rndHex.toString(16);
         }
     }
 }
