@@ -210,6 +210,7 @@ function generateDrunkenTable(el, lastTable) {
         }
         else {
             GridProcedure.prop.drunken.paths  = 5;
+            GridProcedure.prop.drunken.border = 0;
             GridProcedure.prop.drunken.smooth = 0;
             GridProcedure.prop.drunken.filler = 0.4;
             GridProcedure.prop.drunken.length = 0.1;

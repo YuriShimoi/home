@@ -60,7 +60,7 @@
         Mãos à obra! Simplificando a criação do campo minado, vamos novamente considerar um tabuleiro de <b> dimensões 8x8</b>, das 64 casas <b>8 destas em posições
         aleatórias serão minas terrestres</b>, as demais serão vazias ou terão o <b>número de minas adjacentes</b> caso haja alguma, ou seja, variam de 1 a 8.
         Uma vez que o tabuleiro foi gerado basta esconder os valores das casas, e revelá-los conforme a interação do jogador.
-        <i>(se esta página for reiniciada, um novo tabuleiro será criado proceduralmente)</i>
+        <i>(se esta página for atualizada um novo tabuleiro será gerado proceduralmente)</i>
       </p>
       <br>
       <div class="table-div">
@@ -71,10 +71,10 @@
       <h2>O que constitui um mapa de jogo</h2>
       <p>
         Considerando apenas jogos 2D, existem dois tipos mais populares, <b>visão superior</b> e <b>plataforma</b>. Algumas diferenças cruciais no mapeamento de ambos
-        é a presença de <a href="https://pt.wikipedia.org/wiki/Paralaxe">paralaxe</a> para adicionar profundidade às plataformas, e utilização de elementos
-        <a href="https://pt.wikipedia.org/wiki/2,5D_(computa%C3%A7%C3%A3o_gr%C3%A1fica)">2.5D</a> e
-        <a href="https://pt.wikipedia.org/wiki/Perspectiva_isom%C3%A9trica">visão isométrica</a> combinadas à visão superior. Ignorando estes métodos bem como a
-        separação de camadas de textura, <b>todo mapa pode ser resumido a uma grade bidimensional</b>, semelhante aos tabuleiros de xadrez e campo minado.
+        é a presença de <a target="_blank" href="https://pt.wikipedia.org/wiki/Paralaxe">paralaxe</a> para adicionar profundidade às plataformas, e utilização de
+        elementos <a target="_blank" href="https://pt.wikipedia.org/wiki/2,5D_(computa%C3%A7%C3%A3o_gr%C3%A1fica)">2.5D</a> e
+        <a target="_blank" href="https://pt.wikipedia.org/wiki/Perspectiva_isom%C3%A9trica">visão isométrica</a> combinadas à visão superior. Ignorando estes métodos
+        bem como a separação de camadas de textura, <b>todo mapa pode ser resumido a uma grade bidimensional</b>, semelhante aos tabuleiros de xadrez e campo minado.
       </p>
       <p>
         Simplificando, de modo geral, todo elemento do mapa possui algumas características comuns, <b>textura</b> (incluindo animação), <b>colisão</b>, <b>estado</b>
@@ -94,9 +94,10 @@
         algumas regras para gerar variações proceduralmente.
       </p>
       <p>
-        Neste caso de exemplo vamos criar um caminho em uma floresta, <b>o player (em vermelho)</b> inicia bem no centro do mapa e as <b>áreas abertas (em verde claro)</b>
-        são um círculo ao redor e um caminho de 3 blocos de largura em direção ao lado inferior. Para comparação, no método procedural vamos seguir as mesmas regras, com a
-        diferença somente de <b>iniciar o jogador em um ponto aleatório (dentro da área marcada em amarelo)</b>, e então traçar um caminho até o centro do lado inferior.
+        Neste caso de exemplo vamos criar um caminho em uma floresta,
+        <b>o player (em vermelho)</b> inicia bem no centro do mapa e as <b>áreas abertas (em verde claro)</b> são um círculo ao redor e um caminho de 3 blocos de
+        largura em direção ao lado inferior. Para comparação, no método procedural vamos seguir as mesmas regras, com a diferença somente de
+        <b>iniciar o jogador em um ponto aleatório (dentro da área marcada em amarelo)</b>, e então traçar um caminho até o centro do lado inferior.
         <i>(se esta página for atualizada um novo mapa será gerado proceduralmente)</i>
       </p>
       <br>
@@ -124,7 +125,7 @@
         Cada método procedural possui seus próprios pontos positivos e negativos, e suas aplicações são diferentes e depende somente de como serão utilizados na
         geração do terreno. Em uma mesma geração também <b>é possível sobrepor dois métodos ou utilizar o mesmo mais de uma vez</b> para alcançar a geração que melhor
         se adeque ao esperado, levando sempre em conta a otimização e mesclagem dos métodos.
-        <i>(Os exemplos abaixo são gerados na hora, se a página for reiniciada novas gerações serão mostradas)</i>
+        <i>(se esta página for atualizada novas gerações serão mostradas em todos os métodos abaixo)</i>
       </p>
 
       <h3>Drunken Walk</h3>
@@ -143,29 +144,32 @@
         <table size="15-15" class="drunken-table drunken-table-small"></table>
       </div>
       <p>
-        Algumas variações interessantes que podem ser aplicadas neste método são adicionar mais "bêbados" iniciando do mesmo ponto (para garantir que todas as casas
-        sempre serão acessíveis) ou em caminhos já visitados, parar a marcação quando uma quantidade de caminhos for preenchida no mapa e não pela quantidade de
-        passos dados, ou utilizar o método <b>Cellular Automaton</b> (próximo método citado neste artigo) para suavizar os caminhos marcados e gerar uma versão com
-        menos ruído.
+        Algumas variações interessantes que podem ser aplicadas neste método são <b>adicionar mais "bêbados"</b> iniciando do mesmo ponto (para garantir que todas as
+        casas sempre serão acessíveis) ou em caminhos já visitados, <b>parar a marcação quando uma quantidade de caminhos for preenchida</b> no mapa e não pela
+        quantidade de passos dados, ou utilizar o método <b>Cellular Automaton</b> (próximo método citado neste artigo) para <b>suavizar os caminhos marcados</b> e
+        gerar uma versão com menos ruído.
       </p>
       <br>
       <div class="table-div">
-        <table size="80-80" class="drunken-table"></table>
-        <table size="80-80" class="drunken-table drunken-table-smooth"></table>
+        <table size="90-90" class="drunken-table"></table>
+        <table size="90-90" class="drunken-table drunken-table-smooth"></table>
       </div>
       <p><a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html?method=drunken">Demo online com aplicação do método.</a></p>
       
       <h3>Cellular Automaton (Cellular Automata)</h3>
       <p>
-        
+        Vamos nos restringir a utilizar uma variação do que é de fato o
+        <a target="_blank" href="https://mathworld.wolfram.com/ElementaryCellularAutomaton.html">Cellular Automaton</a>, já que este se trata de um modelo de
+        computação e não somente um método procedural. A partir de um setup inicial o método causa uma alteração no mapeamento, repetindo o processo e transformando
+        o terreno é possível criar padrões ao longo das transformações. De maneira geral, para toda célula do mapa é aplicado um filtro, onde o seu valor dependendo
+        do valor das células vizinhas, assim, <b>as células são influenciadas em cadeia e se propagam</b> de acordo com as regras aplicadas e no setup inicial.
       </p>
-      <br>
-      <div class="table-div">
-        <table class=""></table>
-        <table class=""></table>
-      </div>
       <p>
-
+        Para a geração de terrenos, por ser necessário um setup inicial, este método funciona melhor sendo um refinador da geração de outros métodos como no caso
+        anterior, porém pode ser adaptado para gerar regiões bem definidas e depois uma nova camada de regras para refinar a própria transformação.
+      </p>
+      <p>
+        [Método]
       </p>
       <br>
       <div class="table-div">
@@ -176,7 +180,10 @@
 
       <h3>Perlin Noise</h3>
       <p>
-
+        [Introdução]
+      </p>
+      <p>
+        [Método]
       </p>
       <br>
       <div class="table-div">
@@ -184,7 +191,7 @@
         <table class=""></table>
       </div>
       <p>
-
+        [Variação]
       </p>
       <br>
       <div class="table-div">
@@ -192,6 +199,7 @@
         <table class=""></table>
       </div>
       <p><a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html?method=perlin">Demo online com aplicação do método.</a></p>
+
       <br><br>
     </div>
 	</body>
