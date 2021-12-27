@@ -8,9 +8,10 @@
 
     <link rel="stylesheet" href="/home/shared/basic.css">
     <script src="/home/shared/basic.js"></script>
-	<!-- <link rel="stylesheet" href="basic.css"> -->
-	<link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+    <!-- <link rel="stylesheet" href="basic.css"> -->
+    <link rel="stylesheet" href="style.css">
+    <script src="imports/JSMapEngine/procedural.js"></script>
+    <script src="script.js"></script>
 	</head>
 	<body>
 		<nav>
@@ -39,7 +40,7 @@
         ao de xadrez.
       </p>
       <br>
-      <div id="chess-table-div">
+      <div class="table-div">
         <table class="chess-table chess-table-enumerated"></table>
         <table class="chess-table"></table>
       </div>
@@ -62,7 +63,7 @@
         <i>(se esta página for reiniciada, um novo tabuleiro será criado proceduralmente)</i>
       </p>
       <br>
-      <div id="minesweeper-table-div">
+      <div class="table-div">
         <table class="minesweeper-table"></table>
         <table class="minesweeper-table minesweeper-table-enumerated"></table>
       </div>
@@ -89,43 +90,109 @@
       <h2>Quais as vantagens e desvantagens</h2>
       <p>
         A questão mas importante aqui é <b>o quê vale a pena gerar proceduralmente</b>, para responder isto é necessário entender as vantagens e desvantagens para os
-        tipos de mapas que podem ser abordados. Para simplificação do que precisamos observar, vamos trabalhar com um mapa básico de uma floresta criada manualmente,
-        em seguida aplicar algumas regras para gerar variações proceduralmente.
+        tipos de mapas que podem ser abordados. Para simplificação do que precisamos observar, vamos trabalhar com um mapa em visão superior e, em seguida, aplicar
+        algumas regras para gerar variações proceduralmente.
       </p>
       <p>
-        Neste caso de exemplo vamos criar um caminho em uma floresta, <b>o player (em vermelho)</b> inicia bem no centro do mapa e as <b>áreas abertas (sem árvores)</b>
-        são um círculo ao redor e um caminho de 3 blocos de largura em direção ao lado inferior. Para comparação, no método procedural vamos seguir as mesmas regras, com
-        a diferença somente de <b>iniciar o jogador em um ponto aleatório (dentro da área marcada em amarelo)</b> e então traçar um caminho até o centro do lado inferior.
+        Neste caso de exemplo vamos criar um caminho em uma floresta, <b>o player (em vermelho)</b> inicia bem no centro do mapa e as <b>áreas abertas (em verde claro)</b>
+        são um círculo ao redor e um caminho de 3 blocos de largura em direção ao lado inferior. Para comparação, no método procedural vamos seguir as mesmas regras, com a
+        diferença somente de <b>iniciar o jogador em um ponto aleatório (dentro da área marcada em amarelo)</b>, e então traçar um caminho até o centro do lado inferior.
         <i>(se esta página for atualizada um novo mapa será gerado proceduralmente)</i>
       </p>
       <br>
-      <div id="forest-table-div">
+      <div class="table-div">
         <table class="forest-table"></table>
         <table class="forest-table forest-marked forest-procedural"></table>
         <table class="forest-table forest-procedural"></table>
       </div>
       <p>
-        Entre as principais vantagens de utilizar métodos procedurais para geração de terreno é a englobar variações do terreno sem a necessidade de produzí-los
-        manualmente e, dependendo da variação, terrenos com estética mais natural (menos seções retas ou centralizadas) podem ser obtidos e, como citado anteriormente, a
-        presença do método procedural disponibiliza variações do terreno utilizando menos memória.
+        Entre as principais vantagens de utilizar métodos procedurais para geração de terreno é englobar variações da seção sem a necessidade de produzí-los
+        manualmente, dependendo da variação terrenos com estética mais natural (menos seções retas ou centralizadas) podem ser obtidos e, como citado anteriormente,
+        <b>a presença do método procedural disponibiliza variações do terreno utilizando menos memória</b>, pois armazena o método e não todos os mapas individuais.
+        Além disto o método procedural <b>produz mapas mais rapidamente e é mais adaptável para outras gerações</b> uma vez que é necessário apenas a manutenção das
+        regras.
       </p>
+      <p>
+        Vale observar que utilizar métodos procedurais para a criação dos mapas possui algumas limitações, <b>métodos mais complexos exigem mais processamento</b>
+        e dependendo de como estão otimizados, ou quando o terreno precisa ser gerado, podem acarretar em demora no carregamento, para contornar este problema alguns
+        métodos como o <b>Perlin Noise</b>, que será melhor abordado mais à frente neste artigo, contornam a necessidade de gerar o mapa completamente antes de poder
+        ser utilizado, quando aplicar algum método procedural é importante estar atento ao custo <b>memória x processamento</b>.
+      </p>
+      
+      <h2>Alguns métodos e suas aplicações</h2>
+      <p>
+        Cada método procedural possui seus próprios pontos positivos e negativos, e suas aplicações são diferentes e depende somente de como serão utilizados na
+        geração do terreno. Em uma mesma geração também <b>é possível sobrepor dois métodos ou utilizar o mesmo mais de uma vez</b> para alcançar a geração que melhor
+        se adeque ao esperado, levando sempre em conta a otimização e mesclagem dos métodos.
+        <i>(Os exemplos abaixo são gerados na hora, se a página for reiniciada novas gerações serão mostradas)</i>
+      </p>
+
+      <h3>Drunken Walk</h3>
+      <p>
+        O método do <b>Andar do Bêbado</b> é tanto simples de entender quanto de aplicar, entre as principais características é que qualquer ponto do mapa marcado
+        utilizando este método está ligado a quaisquer outros pontos, logo, sua aplicação para caminhos (principalmente cavernas) é muito utilizada quando se quer
+        garantir que o player não fique sem acesso a todas as áreas geradas.
+      </p>
+      <p>
+        Um "bêbado" é posicionado na malha do mapa (geralmente no centro ou na posição onde o jogador irá iniciar na seção), aleatóriamente uma direção é escolhida
+        para que ele seja movido, este processo é repetido <b>n</b> quantidade de vezes e toda casa em que ele passa é marcada como um caminho.
+      </p>
+      <br>
+      <div class="table-div">
+        <table size="15-15" class="drunken-table drunken-table-small drunken-table-animate"></table>
+        <table size="15-15" class="drunken-table drunken-table-small"></table>
+      </div>
+      <p>
+        Algumas variações interessantes que podem ser aplicadas neste método são adicionar mais "bêbados" iniciando do mesmo ponto (para garantir que todas as casas
+        sempre serão acessíveis) ou em caminhos já visitados, parar a marcação quando uma quantidade de caminhos for preenchida no mapa e não pela quantidade de
+        passos dados, ou utilizar o método <b>Cellular Automaton</b> (próximo método citado neste artigo) para suavizar os caminhos marcados e gerar uma versão com
+        menos ruído.
+      </p>
+      <br>
+      <div class="table-div">
+        <table size="80-80" class="drunken-table"></table>
+        <table size="80-80" class="drunken-table drunken-table-smooth"></table>
+      </div>
+      <p><a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html?method=drunken">Demo online com aplicação do método.</a></p>
+      
+      <h3>Cellular Automaton (Cellular Automata)</h3>
       <p>
         
       </p>
+      <br>
+      <div class="table-div">
+        <table class=""></table>
+        <table class=""></table>
+      </div>
+      <p>
 
-      
-      <h2>Alguns métodos e suas aplicações</h2>
-      
-      <h3>Drunken Walk</h3>
-      
-      
-      <h3>Cellullar Automata</h3>
-      
-      
+      </p>
+      <br>
+      <div class="table-div">
+        <table class=""></table>
+        <table class=""></table>
+      </div>
+      <p><a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html?method=cellular">Demo online com aplicação do método.</a></p>
+
       <h3>Perlin Noise</h3>
-      
-      
-      <a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html">Procedure demo</a>
+      <p>
+
+      </p>
+      <br>
+      <div class="table-div">
+        <table class=""></table>
+        <table class=""></table>
+      </div>
+      <p>
+
+      </p>
+      <br>
+      <div class="table-div">
+        <table class=""></table>
+        <table class=""></table>
+      </div>
+      <p><a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html?method=perlin">Demo online com aplicação do método.</a></p>
+      <br><br>
     </div>
 	</body>
 </html>

@@ -31,12 +31,13 @@ div.article img {
     max-width: 400px;
 }
 
-div#chess-table-div {
+div.table-div {
     display: flex;
     justify-content: center;
     gap: 20px 50px;
     flex-wrap: wrap;
 }
+
 
 table.chess-table {
     border-collapse: collapse;
@@ -55,12 +56,6 @@ table.chess-table td.chess-table-black {
     color: white;
 }
 
-div#minesweeper-table-div {
-    display: flex;
-    justify-content: center;
-    gap: 20px 50px;
-    flex-wrap: wrap;
-}
 
 table.minesweeper-table {
     border-collapse: collapse;
@@ -74,12 +69,6 @@ table.minesweeper-table td {
 }
 
 
-div#forest-table-div {
-    display: flex;
-    justify-content: center;
-    gap: 20px 50px;
-    flex-wrap: wrap;
-}
 table.forest-table {
     border-collapse: collapse;
     display: inline-table;
@@ -103,4 +92,27 @@ table.forest-table td.playerCell {
 table.forest-table tr:nth-child(even) td:nth-child(even),
 table.forest-table tr:nth-child(odd) td:nth-child(odd) {
     box-shadow: inset 20px 20px #00000015;
+}
+
+
+table.drunken-table {
+    border-collapse: collapse;
+    display: inline-table;
+    border: 1px solid #222;
+    width: 300px;
+    height: 300px;
+}
+table.drunken-table td {
+    text-align: center;
+    background-color: #000000;
+}
+table.drunken-table td.pathCell {
+    background-color: #ffffff;
+}
+table.drunken-table td.drunkenCell {
+    background-color: red;
+}
+table.drunken-table tr:nth-child(even) td:nth-child(even),
+table.drunken-table tr:nth-child(odd) td:nth-child(odd) {
+    box-shadow: inset 20px 20px #77777722;
 }

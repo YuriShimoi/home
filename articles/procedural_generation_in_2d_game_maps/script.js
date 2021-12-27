@@ -42,24 +42,32 @@ function wakeup() {
     }
     for(let ct=0; ct < forestTables.length; ct++) {
         generateForestTable(forestTables[ct], forestSize.x, forestSize.y, rndPos);
-        // obfuscateTable(forestTables[ct]);
+    }
+
+    let drunkenTables = document.getElementsByClassName("drunken-table");
+    let lastTable = null;
+    for(let dt=0; dt < drunkenTables.length; dt++) {
+        lastTable = generateDrunkenTable(drunkenTables[dt], lastTable);
     }
 }
+
+
+// GENERATORS
 
 function generateChessTable(el, x, y) {
     let isEnumerated = el.classList.contains("chess-table-enumerated");
     
     let tableBody = el.createTBody();
     for(let tby=y; tby >= 1; tby--) {
-        let tableBodyRow = tableBody.insertRow();
-        tableBodyRow.insertCell().innerHTML = tby;
+        let tableRow = tableBody.insertRow();
+        tableRow.insertCell().innerHTML = tby;
         for(let tbx=1; tbx <= x; tbx++) {
-            let newCell = tableBodyRow.insertCell();
+            let tableCell = tableRow.insertCell();
             
             if(isEnumerated)
-                newCell.innerHTML = tbx + tby;
+                tableCell.innerHTML = tbx + tby;
             if((tbx + tby) % 2 == 0)
-                newCell.classList.add("chess-table-black");
+                tableCell.classList.add("chess-table-black");
         }
     }
 
@@ -75,9 +83,9 @@ function generateMinesweeperTable(el, x, y, msGen) {
 
     let tableBody = el.createTBody();
     for(let tby=0; tby < y; tby++) {
-        let tableBodyRow = tableBody.insertRow();
+        let tableRow = tableBody.insertRow();
         for(let tbx=0; tbx < x; tbx++) {
-            tableBodyRow.insertCell().innerHTML = isEnumerated? msGen[tbx][tby] !== 0? msGen[tbx][tby]: "": msGen[tbx][tby] === "💥"? "💥": "";
+            tableRow.insertCell().innerHTML = isEnumerated? msGen[tbx][tby] !== 0? msGen[tbx][tby]: "": msGen[tbx][tby] === "💥"? "💥": "";
         }
     }
 }
@@ -136,26 +144,118 @@ function generateForestTable(el, x, y, rndpos={}) {
     // mapping
     let tableBody = el.createTBody();
     for(let tby=0; tby < y; tby++) {
-        let tableBodyRow = tableBody.insertRow();
+        let tableRow = tableBody.insertRow();
         for(let tbx=0; tbx < x; tbx++) {
-            let tableBodyRowCell = tableBodyRow.insertCell();
+            let tableCell = tableRow.insertCell();
             if(tableMapping[tby][tbx] % 2 === 0) // forest-marked
-                tableBodyRowCell.classList.add("procCell");
+                tableCell.classList.add("procCell");
             if(tableMapping[tby][tbx] % 3 === 0) // path
-                tableBodyRowCell.classList.add("pathCell");
+                tableCell.classList.add("pathCell");
             if(tbx == pPos.x && tby == pPos.y)
-                tableBodyRowCell.classList.add("playerCell");
+                tableCell.classList.add("playerCell");
         }
     }
 }
 
-function obfuscateTable(el) {
-    let tbRows = el.rows;
-    for(let tr=0; tr < tbRows.length; tr++) {
-        let tbCells = tbRows[tr].cells;
-        for(let tc=0; tc < tbCells.length; tc++) {
-            let rndHex = Math.floor(Math.random() * 25)+10;
-            tbCells[tc].style.boxShadow = "inset 10px 10px #000000" + rndHex.toString(16);
+function generateDrunkenTable(el, lastTable) {
+    let [x, y] = el.getAttribute("size").split("-").map(x => parseInt(x));
+
+    let tableMapping;
+    let tableMappingHistory = null;
+    if(lastTable === null || lastTable.length !== y) {
+        if(el.classList.contains("drunken-table-small")) {
+            tableMappingHistory = [];
+
+            // generate drunken manually
+            let lastPos = { x: Math.floor(x/2), y: Math.floor(y/2) };
+            tableMappingHistory[0] = {
+                table: new Array(y).fill("").map(_ => new Array(x).fill(0)),
+                drunken: {...lastPos}
+            }
+            tableMappingHistory[0].table[lastPos.y][lastPos.x] = 1;
+            
+            for(let tmh=1; tmh < 50; tmh++) {
+                let rndDir = Math.floor(Math.random()*4);
+                switch(rndDir) {
+                    case 0: lastPos.x++; break;
+                    case 1: lastPos.x--; break;
+                    case 2: lastPos.y++; break;
+                    case 3: lastPos.y--; break;
+                }
+                if(lastPos.x >=x || lastPos.x < 0 || lastPos.y >=y || lastPos.y < 0) {
+                    switch(rndDir) {
+                        case 0: lastPos.x--; break;
+                        case 1: lastPos.x++; break;
+                        case 2: lastPos.y--; break;
+                        case 3: lastPos.y++; break;
+                    }
+                    tmh--;
+                    continue;
+                }
+                tableMappingHistory[tmh] = {
+                    table: new Array(y).fill("")
+                                            .map((_,ay) => new Array(x).fill(0)
+                                            .map((_,ax) => tableMappingHistory[tmh-1].table[parseInt(ay)][parseInt(ax)])),
+                    drunken: {...lastPos}
+                };
+                tableMappingHistory[tmh].table[lastPos.y][lastPos.x] = 1;
+            }
+            
+            tableMapping = new Array(y).fill("").map(_ => new Array(x).fill(1));
+            for(let tmy=0; tmy < y; tmy++) {
+                for(let tmx=0; tmx < x; tmx++) {
+                    tableMapping[tmy][tmx] = tableMappingHistory[tableMappingHistory.length-1].table[tmy][tmx];
+                }
+            }
+        }
+        else {
+            GridProcedure.prop.drunken.paths  = 5;
+            GridProcedure.prop.drunken.smooth = 0;
+            GridProcedure.prop.drunken.filler = 0.4;
+            GridProcedure.prop.drunken.length = 0.1;
+    
+            tableMapping = GridProcedure.generate("drunken", {'x':x,'y':y});
         }
     }
+    else
+        tableMapping = lastTable;
+
+    if(el.classList.contains("drunken-table-smooth"))
+        for(let _=0; _<3; _++)
+            tableMapping = GridProcedure._smoother(tableMapping, ["0","1"], ["0"]);
+
+    // generate table
+    let tableBody = el.createTBody();
+    for(let tby=0; tby < y; tby++) {
+        let tableRow = tableBody.insertRow();
+        for(let tbx=0; tbx < x; tbx++) {
+            let tableCell = tableRow.insertCell();
+            if(tableMapping[tby][tbx] == 1)
+                tableCell.classList.add("pathCell");
+        }
+    }
+    if(tableMappingHistory !== null) {
+        let frame = 0;
+        setInterval(() => {
+            let tableRows = el.rows;
+            for(let tby=0; tby < tableRows.length; tby++) {
+                let tableCells = tableRows[tby].cells;
+                for(let tbx=0; tbx < tableCells.length; tbx++) {
+                    if(tableCells[tbx].classList.contains("drunkenCell"))
+                        tableCells[tbx].classList.remove("drunkenCell");
+
+                    if(tableMappingHistory[frame].table[tby][tbx] == 1)
+                        tableCells[tbx].classList.add("pathCell");
+                    else if(tableCells[tbx].classList.contains("pathCell"))
+                        tableCells[tbx].classList.remove("pathCell");
+                }
+            }
+            let drPos = tableMappingHistory[frame].drunken;
+            el.rows[drPos.y].cells[drPos.x].classList.add("drunkenCell");
+            frame++;
+            if(frame >= tableMappingHistory.length) frame = 0;
+        }, 100);
+    }
+
+    return tableMapping;
 }
