@@ -63,24 +63,15 @@ class GridProcedure {
     }
   }
 
-  static _cellular(size){
+  static _cellular(size, noise_setup=null){
     // Cellular Automaton - https://www.raywenderlich.com/2425-procedural-level-generation-in-games-using-a-cellular-automaton-part-1
     let basis     = GridProcedure.prop.cellular.basis;
-    let map       = GridProcedure._cleanMap(size, basis);
 
-    let drops     = GridProcedure.prop.cellular.initial_drop * size.x * size.y;
     let iter      = GridProcedure.prop.cellular.iterations;
     let rnd_check = GridProcedure.prop.cellular.random_check;
     let variants  = GridProcedure.prop.cellular.variants;
 
-    for(let v in variants){
-      let variant = variants[v];
-      for(let d=0; d < drops; d++){
-        let x = Math.floor(Math.random() * size.x);
-        let y = Math.floor(Math.random() * size.y);
-        if(map[x][y] == basis) map[x][y] = variant;
-      }
-    }
+    let map = noise_setup?? GridProcedure._cellular_noise_setup(size);
 
     for(let i=0; i < iter; i++){
       for(let v in variants){
@@ -191,6 +182,25 @@ class GridProcedure {
 
   static _fill_map(method, size){
     return new Array(size.x).fill().map((_,x) => new Array(size.y).fill().map((_,y) => method(x,y)));
+  }
+
+  static _cellular_noise_setup(size) {
+    let basis    = GridProcedure.prop.cellular.basis;
+    let map      = GridProcedure._cleanMap(size, basis);
+    
+    let drops    = GridProcedure.prop.cellular.initial_drop * size.x * size.y;
+    let variants = GridProcedure.prop.cellular.variants;
+
+    for(let v in variants){
+      let variant = variants[v];
+      for(let d=0; d < drops; d++){
+        let x = Math.floor(Math.random() * size.x);
+        let y = Math.floor(Math.random() * size.y);
+        if(map[x][y] == basis) map[x][y] = variant;
+      }
+    }
+
+    return map;
   }
 
   static _cellular_check(map, pos, v){

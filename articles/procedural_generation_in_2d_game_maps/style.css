@@ -78,7 +78,6 @@ table.forest-table {
 table.forest-table td {
     width: 7px;
     height: 7px;
-    text-align: center;
 }
 table.forest-table td.procCell {
     background-color: #ffff00;
@@ -118,4 +117,27 @@ table.drunken-table td.drunkenCell {
 table.drunken-table tr:nth-child(even) td:nth-child(even),
 table.drunken-table tr:nth-child(odd) td:nth-child(odd) {
     box-shadow: inset 20px 20px #77777722;
+}
+
+table.cellular-table {
+    border-collapse: collapse;
+    display: inline-table;
+    box-shadow:  1px  1px #000,
+                -1px -1px #000,
+                 1px -1px #000,
+                -1px  1px #000;
+    width: 270px;
+    height: 270px;
+}
+table.cellular-table td {
+    background-color: #000000;
+}
+table.cellular-table td.cellOne {
+    background-color: #fff;
+}
+table.cellular-table td.cellTwo {
+    background-color: #999;
+}
+table.cellular-table td.cellThree {
+    background-color: #555;
 }

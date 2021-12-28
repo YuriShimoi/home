@@ -132,7 +132,8 @@
       <p>
         O método do <b>Andar do Bêbado</b> é tanto simples de entender quanto de aplicar, entre as principais características é que qualquer ponto do mapa marcado
         utilizando este método está ligado a quaisquer outros pontos, logo, sua aplicação para caminhos (principalmente cavernas) é muito utilizada quando se quer
-        garantir que o player não fique sem acesso a todas as áreas geradas.
+        garantir que o player tenha acesso a todas as áreas geradas, também pode ser adaptado para decidir a
+        <a target="_blank" href="http://davideyork.com/articles/drunken-walk-procedural-algorithm">ligação entre seções do mapa</a>.
       </p>
       <p>
         Um "bêbado" é posicionado na malha do mapa (geralmente no centro ou na posição onde o jogador irá iniciar na seção), aleatóriamente uma direção é escolhida
@@ -162,19 +163,24 @@
         <a target="_blank" href="https://mathworld.wolfram.com/ElementaryCellularAutomaton.html">Cellular Automaton</a>, já que este se trata de um modelo de
         computação e não somente um método procedural. A partir de um setup inicial o método causa uma alteração no mapeamento, repetindo o processo e transformando
         o terreno é possível criar padrões ao longo das transformações. De maneira geral, para toda célula do mapa é aplicado um filtro, onde o seu valor dependendo
-        do valor das células vizinhas, assim, <b>as células são influenciadas em cadeia e se propagam</b> de acordo com as regras aplicadas e no setup inicial.
+        do valor das células vizinhas, assim, <b>as células são influenciadas em cadeia e se propagam</b> de acordo com as regras aplicadas e o setup inicial.
       </p>
       <p>
         Para a geração de terrenos, por ser necessário um setup inicial, este método funciona melhor sendo um refinador da geração de outros métodos como no caso
-        anterior, porém pode ser adaptado para gerar regiões bem definidas e depois uma nova camada de regras para refinar a própria transformação.
+        anterior, porém
+        <a target="_blank" href="https://www.raywenderlich.com/2425-procedural-level-generation-in-games-using-a-cellular-automaton-part-1">pode ser adaptado</a>
+         para gerar terrenos com aspecto parecido com o <b>Drunken Walk</b>. Uma das variações interessantes é criar regiões bem definidas imitando a separação de
+         territórios ou biomas, uma vez que este método pode propagar diferentes marcações de terreno ao mesmo tempo.
       </p>
       <p>
-        [Método]
+        Pontos aleatórios dentro do mapa são sorteados e marcados para criar o setup inicial, a regra de propagação é aplicada a todas as células, este processo
+        é repetido <b>n</b> vezes, uma última transformação é aplicada com uma regra de suavização para remover ruídos.
       </p>
       <br>
       <div class="table-div">
-        <table class=""></table>
-        <table class=""></table>
+        <table class="cellular-table cellular-table-setup"></table>
+        <table class="cellular-table"></table>
+        <table class="cellular-table cellular-table-smooth"></table>
       </div>
       <p><a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html?method=cellular">Demo online com aplicação do método.</a></p>
 

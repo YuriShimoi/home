@@ -49,6 +49,13 @@ function wakeup() {
     for(let dt=0; dt < drunkenTables.length; dt++) {
         lastTable = generateDrunkenTable(drunkenTables[dt], lastTable);
     }
+
+    let cellularTables = document.getElementsByClassName("cellular-table");
+    let lastSetup   = null;
+    let lastMapping = null;
+    for(let ct=0; ct < cellularTables.length; ct++) {
+        [lastSetup, lastMapping] = generateCellularTable(cellularTables[ct], 100, 100, lastSetup, lastMapping);
+    }
 }
 
 
@@ -259,4 +266,39 @@ function generateDrunkenTable(el, lastTable) {
     }
 
     return tableMapping;
+}
+
+function generateCellularTable(el, x, y, setup=null, mapping=null) {
+    let size = { x: x, y: y };
+
+    GridProcedure.prop.cellular.iterations   = 25;
+    GridProcedure.prop.cellular.initial_drop = 0.08;
+
+    GridProcedure.prop.cellular.smooth   = 0;
+    GridProcedure.prop.cellular.basis    = 0;
+    GridProcedure.prop.cellular.variants = [1, 0.7, 0.4];
+
+    setup = setup?? GridProcedure._cellular_noise_setup(size);
+    mapping = el.classList.contains("cellular-table-setup")? setup: GridProcedure._cellular( size, setup);
+    
+    if(el.classList.contains("cellular-table-smooth"))
+        for(let _=0; _<2; _++)
+            mapping = GridProcedure._smoother(mapping, [1, 0.7, 0.4, 0]);
+
+    // fill table
+    let tableBody = el.createTBody();
+    for(let tby=0; tby < y; tby++) {
+        let tableRow = tableBody.insertRow();
+        for(let tbx=0; tbx < x; tbx++) {
+            let tableCell = tableRow.insertCell();
+            if(mapping[tby][tbx] == 1)
+                tableCell.classList.add("cellOne");
+            else if(mapping[tby][tbx] == 0.7)
+                tableCell.classList.add("cellTwo");
+            else if(mapping[tby][tbx] == 0.4)
+                tableCell.classList.add("cellThree");
+        }
+    }
+
+    return [setup, mapping];
 }
