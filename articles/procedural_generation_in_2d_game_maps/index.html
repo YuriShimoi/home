@@ -8,8 +8,8 @@
 
     <link rel="stylesheet" href="/home/shared/basic.css">
     <script src="/home/shared/basic.js"></script>
-    <!-- <link rel="stylesheet" href="basic.css"> -->
     <link rel="stylesheet" href="style.css">
+    <script src="imports/joeiddon_perlin/perlin.js"></script>
     <script src="imports/JSMapEngine/procedural.js"></script>
     <script src="script.js"></script>
 	</head>
@@ -186,23 +186,28 @@
 
       <h3>Perlin Noise</h3>
       <p>
-        [Introdução]
+        O <b>Ruído de Perlin</b> é um <a target="_blank" href="https://en.wikipedia.org/wiki/Gradient_noise">ruído gradiente</a> desenvolvido para criar terrenos
+        com aparência realista, pode ser utilizado para relevos (<a target="_blank" href="https://joeiddon.github.io/zengine/demos/terrain">muito utilizado em 3D</a>),
+        fogo, fluídos ou mesmo fumaça. Existe uma versão mais nova desenvolvida pelo mesmo criador chamada
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Simplex_noise">Simplex Noise</a> que utiliza bem menos processamento para gerações com mais dimensões
+        em comparação ao <b>Perlin Noise</b>, porém, possui menos exemplos e implementações disponíveis.
       </p>
       <p>
-        [Método]
+        Além da aparência realista que ele consegue alcançar, uma das melhores características é o fato de ele poder ser trabalhado com uma <i>seed</i> (sequência,
+        geralmente numérica, que armazena uma configuração, que, se utilizada, garante uma geração idêntica), e possuindo uma mesma <i>seed</i> e a coordenada nas
+        dimensões (neste caso <b>x</b> e <b>y</b> por estarmos utilizando em 2 dimensões) é possível gerar somente um pedaço do mapa sem processar o restante, isto
+        garante menor consumo de processamento permitindo que o mapa expanda quase infinitamente conforme apenas a parte do mapa onde o <b>player</b> está precisa
+        ser gerada.
+      </p>
+      <p>
+        Por se tratar de um método mais complexo aqui está uma <a target="_blank" href="https://joeiddon.github.io/projects/javascript/perlin">leitura mais elaborada</a>
+        da implementação, e também uma <a target="_blank" href="https://github.com/joeiddon/perlin">biblioteca disponível em javascript ou python</a>.
+        <i>(Abaixo está uma versão gerada diretamente com o método Perlin, e em seguida a mesma geração porém normalizada)</i>
       </p>
       <br>
       <div class="table-div">
-        <table class=""></table>
-        <table class=""></table>
-      </div>
-      <p>
-        [Variação]
-      </p>
-      <br>
-      <div class="table-div">
-        <table class=""></table>
-        <table class=""></table>
+        <table class="perlin-table"></table>
+        <table class="perlin-table perlin-table-normalized"></table>
       </div>
       <p><a target="_blank" href="https://yurishimoi.github.io/simpleworld/procedure-demo.html?method=perlin">Demo online com aplicação do método.</a></p>
 

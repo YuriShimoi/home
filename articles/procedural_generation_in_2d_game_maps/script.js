@@ -6,11 +6,13 @@ let documentInterval = setInterval(() => {
 
 
 function wakeup() {
+    // CHESS
     let chessTables = document.getElementsByClassName("chess-table");
     for(let ct=0; ct < chessTables.length; ct++) {
         generateChessTable(chessTables[ct], 8, 8);
     }
 
+    // MINESWEEPER
     let minesweeperTables = document.getElementsByClassName("minesweeper-table");
     let minesweeperGen = new Array(8).fill("").map(_ => new Array(8).fill(0));
     for(let rnd=0; rnd < 8; rnd++) {
@@ -34,6 +36,7 @@ function wakeup() {
         generateMinesweeperTable(minesweeperTables[mt], 8, 8, minesweeperGen);
     }
 
+    // FOREST
     let forestTables = document.getElementsByClassName("forest-table");
     let forestSize = {x:25, y:19};
     let rndPos = {
@@ -44,17 +47,26 @@ function wakeup() {
         generateForestTable(forestTables[ct], forestSize.x, forestSize.y, rndPos);
     }
 
+    // DRUNKEN
     let drunkenTables = document.getElementsByClassName("drunken-table");
     let lastTable = null;
     for(let dt=0; dt < drunkenTables.length; dt++) {
         lastTable = generateDrunkenTable(drunkenTables[dt], lastTable);
     }
 
+    // CELLULAR
     let cellularTables = document.getElementsByClassName("cellular-table");
     let lastSetup   = null;
     let lastMapping = null;
     for(let ct=0; ct < cellularTables.length; ct++) {
-        [lastSetup, lastMapping] = generateCellularTable(cellularTables[ct], 100, 100, lastSetup, lastMapping);
+        [lastSetup, lastMapping] = generateCellularTable(cellularTables[ct], 135, 135, lastSetup, lastMapping);
+    }
+
+    // PERLIN
+    let perlinTables = document.getElementsByClassName("perlin-table");
+    let lastSeed = null;
+    for(let pt=0; pt < perlinTables.length; pt++) {
+        lastSeed = generatePerlinTable(perlinTables[pt], 135, 135, lastSeed);
     }
 }
 
@@ -301,4 +313,43 @@ function generateCellularTable(el, x, y, setup=null, mapping=null) {
     }
 
     return [setup, mapping];
+}
+
+function generatePerlinTable(el, x, y, seed=null) {
+    let mapping = GridProcedure._perlin({x: x, y:y}, false);
+
+    if(el.classList.contains("perlin-table-normalized"))
+        mapping = normalizeMap(mapping, 1);
+    else
+        mapping = normalizeMap(mapping, 5);
+
+    // fill table
+    let tableBody = el.createTBody();
+    for(let tby=0; tby < y; tby++) {
+        let tableRow = tableBody.insertRow();
+        for(let tbx=0; tbx < x; tbx++) {
+            let tableCell = tableRow.insertCell();
+            let hexColor = parseInt(parseFloat(mapping[tby][tbx]) * 255).toString(16);
+            if(hexColor.length < 2)
+                hexColor = `0${hexColor}`;
+            hexColor = `${hexColor}${hexColor}${hexColor}`;
+            tableCell.style.backgroundColor = `#${hexColor}`;
+        }
+    }
+
+    return seed;
+}
+
+function normalizeMap(map, fixed=2){
+    let max = Math.max();
+    let min = Math.min();
+    map.forEach(x => max = max < Math.max(...x)? Math.max(...x):max);
+    map.forEach(x => min = min > Math.min(...x)? Math.min(...x):min);
+
+    map = map.map(x => x.map(y => y + (0 - min)) // push min value to 0
+                        .map(y => parseFloat((y / (max + (0 - min))) // normalize by max value
+                            .toFixed(fixed)) // fix decimal cases
+                        )
+                  );
+    return map;
 }

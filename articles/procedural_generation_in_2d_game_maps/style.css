@@ -141,3 +141,14 @@ table.cellular-table td.cellTwo {
 table.cellular-table td.cellThree {
     background-color: #555;
 }
+
+table.perlin-table {
+    border-collapse: collapse;
+    display: inline-table;
+    box-shadow:  1px  1px #000,
+                -1px -1px #000,
+                 1px -1px #000,
+                -1px  1px #000;
+    width: 270px;
+    height: 270px;
+}

@@ -45,14 +45,14 @@ class GridProcedure {
       'drunken' : GridProcedure._drunken
     };
 
-    return type in gen? gen[type](sizes): false;
+    return type.toLowerCase() in gen? gen[type](sizes): false;
   }
   
 
-  static _perlin(size){
+  static _perlin(size, newSeed=true){
     try{
       // Perlin Noise - https://joeiddon.github.io/projects/javascript/perlin
-      perlin.seed();
+      if(newSeed) perlin.seed();
       let frequency = GridProcedure.prop.perlin.frequency;
       return GridProcedure._fill_map((x,y) => perlin.get((x/((size.x-1)/frequency*2))-frequency,
                                                          (y/((size.y-1)/frequency*2))-frequency), size);
