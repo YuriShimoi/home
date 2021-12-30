@@ -320,11 +320,25 @@ function generatePerlinTable(el, x, y, seed=null) {
     let mapping = GridProcedure._perlin({x: x, y:y}, false);
 
     if(el.classList.contains("perlin-table-renoise")) {
-        GridProcedure.prop.perlin.frequency = 9;
+        GridProcedure.prop.perlin.frequency = 8;
         let overmapping = GridProcedure._perlin({x: x, y:y});
         for(let my=0; my < y; my++) {
             for(let mx=0; mx < x; mx++) {
                 mapping[my][mx] += overmapping[my][mx]/2;
+            }
+        }
+        GridProcedure.prop.perlin.frequency = 12;
+        overmapping = GridProcedure._perlin({x: x, y:y});
+        for(let my=0; my < y; my++) {
+            for(let mx=0; mx < x; mx++) {
+                mapping[my][mx] += overmapping[my][mx]/4;
+            }
+        }
+        GridProcedure.prop.perlin.frequency = 20;
+        overmapping = GridProcedure._perlin({x: x, y:y});
+        for(let my=0; my < y; my++) {
+            for(let mx=0; mx < x; mx++) {
+                mapping[my][mx] += overmapping[my][mx]/4;
             }
         }
     }
@@ -332,7 +346,7 @@ function generatePerlinTable(el, x, y, seed=null) {
     if(el.classList.contains("perlin-table-normalized"))
         mapping = normalizeMap(mapping, 1);
     else
-        mapping = normalizeMap(mapping, 5);
+        mapping = normalizeMap(mapping, 3);
 
     // fill table
     let tableBody = el.createTBody();
