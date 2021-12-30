@@ -316,7 +316,18 @@ function generateCellularTable(el, x, y, setup=null, mapping=null) {
 }
 
 function generatePerlinTable(el, x, y, seed=null) {
+    GridProcedure.prop.perlin.frequency = 5;
     let mapping = GridProcedure._perlin({x: x, y:y}, false);
+
+    if(el.classList.contains("perlin-table-renoise")) {
+        GridProcedure.prop.perlin.frequency = 9;
+        let overmapping = GridProcedure._perlin({x: x, y:y});
+        for(let my=0; my < y; my++) {
+            for(let mx=0; mx < x; mx++) {
+                mapping[my][mx] += overmapping[my][mx]/2;
+            }
+        }
+    }
 
     if(el.classList.contains("perlin-table-normalized"))
         mapping = normalizeMap(mapping, 1);
